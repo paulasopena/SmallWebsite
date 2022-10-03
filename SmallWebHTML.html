@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+        $(document).ready(function(){
+            $("#UserButton").click(function(){
+                $.ajax(
+                {
+                    type: 'GET',
+                    url: 'https://api.github.com/users/'+$("#UserGitName").val()+'/repos',
+                    data: { get_param: 'value'},
+                    dataType: 'json',
+                    success: function(json){
+                        var repos = 0;
+                        $.each(json, function(index, repository)
+                        {
+                            $('#body').append('<tr><td>'+repository.name+'</td><td>'+repository.description+'</td><td>'+repository.watchers+'</td></tr>');
+                            repos++;
+                        });
+                        if(repos==0){
+                            $("#problemText").text("The repositories have not been found!");
+                        }
+                        else{
+                            $("#problemText").text("Everything has worked out fine!");
+
+                        }
+                    }
+                })
+
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="jumbotron text-center">
+        <h1>GITHUB repositories</h1>
+    </div>
+    <button type="button" class="btn btn-info" id="UserButton">Show repositories</button>
+    <input type="text" class="form-control" id="UserGitName"><br>
+    <table class="Repositories table">
+        <tr>
+            <th>Name of the repository</th>
+            <th>Description</th>
+            <th>Followers</th>
+        </tr>
+        <tbody id="body">
+        </tbody>
+    </table>
+    <div id="problemText"><h2>Texto de Issues</h2></div>
+
+</body>
+</html>
