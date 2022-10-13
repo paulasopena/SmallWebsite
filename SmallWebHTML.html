@@ -15,8 +15,13 @@
                     data: { get_param: 'value'},
                     dataType: 'json',
                     success: function(json){
+                        for(i=0; i<json.length; i++){
+                            $('#body').append('<tr><td>'+json[i].name+'</td><td>'+json[i].description+'</td><td>'+json[i].watches+'</td></tr>');
+                        }
+                        /*
                         var repos = 0;
-                        $.each(json, function(index, repository)
+
+                        $.each(json, function(index,repository)
                         {
                             $('#body').append('<tr><td>'+repository.name+'</td><td>'+repository.description+'</td><td>'+repository.watchers+'</td></tr>');
                             repos++;
@@ -28,6 +33,7 @@
                             $("#problemText").text("Everything has worked out fine!");
 
                         }
+                        */
                     }
                 })
 
@@ -36,11 +42,12 @@
     </script>
 </head>
 <body>
+
     <div class="jumbotron text-center">
         <h1>GITHUB repositories</h1>
     </div>
-    <button type="button" class="btn btn-info" id="UserButton">Show repositories</button>
     <input type="text" class="form-control" id="UserGitName"><br>
+    <button type="button" class="btn btn-info" id="UserButton">Show repositories</button>
     <table class="Repositories table">
         <tr>
             <th>Name of the repository</th>
@@ -50,7 +57,7 @@
         <tbody id="body">
         </tbody>
     </table>
-    <div id="problemText"><h2>Texto de Issues</h2></div>
+    <div id="problemText"><p>Texto de Issues</p></div>
 
 </body>
 </html>
